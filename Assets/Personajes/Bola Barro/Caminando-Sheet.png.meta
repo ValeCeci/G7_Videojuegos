@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2b60b5bdb81b9b4288c188b25e26950
-      internalID: 1747205777
+      spriteID: 7a6a8dfd666506b488c234882ac0a6fb
+      internalID: -379629025
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95f252a5a57abe942b29e0759cc9b513
-      internalID: -963843292
+      spriteID: 940411fc7a4a17f468fdd981f381c205
+      internalID: -1986055741
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b82782dfe864a7f429ca0598542d905b
-      internalID: 2136035926
+      spriteID: 9f456c1ecc7f8ac46a4022f2ce9a92cb
+      internalID: -1564419269
       vertices: []
       indices: 
       edges: []
@@ -187,8 +187,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2561171ce30dd39418250f08ecb31879
-      internalID: -371270769
+      spriteID: 834155378071df44180995afed609d6d
+      internalID: 908763011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Caminando-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a96e3b1a24cc8e5479a04ef3ca8fa06d
+      internalID: -1871532745
       vertices: []
       indices: 
       edges: []
@@ -204,10 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Caminando-Sheet_0: 1747205777
-      Caminando-Sheet_1: -963843292
-      Caminando-Sheet_2: 2136035926
-      Caminando-Sheet_3: -371270769
+      Caminando-Sheet_0: -379629025
+      Caminando-Sheet_1: -1986055741
+      Caminando-Sheet_2: -1564419269
+      Caminando-Sheet_3: 908763011
+      Caminando-Sheet_4: -1871532745
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
