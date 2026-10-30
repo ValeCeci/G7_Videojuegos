@@ -7,6 +7,14 @@ public class BolaBarroController : Enemigo
     private static readonly int CaminandoHash = Animator.StringToHash("caminando");
     private static readonly int PrepararAtaqueHash = Animator.StringToHash("prepararAtaque");
     private static readonly int AtaqueHash = Animator.StringToHash("atacar");
+    private static readonly int RecibioDanioHash = Animator.StringToHash("recibioDanio");
+    private static readonly int MuerteHash = Animator.StringToHash("muerte");
+
+    public float SegundosHastaDesaparecer = 1.5f;
+
+    // Mientras prepara o ejecuta el dash es invulnerable
+    private bool enAtaque;
+    private bool estaMuerto;
 
     void Start()
     {
@@ -15,7 +23,7 @@ public class BolaBarroController : Enemigo
 
     private void FixedUpdate()
     {
-        if (!PuedeAtacar) return;
+        if (!PuedeAtacar || estaMuerto) return;
         ControlarMovimiento();
     }
     private void OnDrawGizmosSelected()
@@ -67,6 +75,7 @@ public class BolaBarroController : Enemigo
     protected override IEnumerator Atacar()
     {
         PuedeAtacar = false;
+        enAtaque = true;
 
         // Detenerse y dejar de animar el caminar
         EstaCaminando = false;
@@ -82,8 +91,7 @@ public class BolaBarroController : Enemigo
         yield return new WaitForSeconds(TiempoPreparacionDash);
 
         // Dash
-        var controlDanio = GameObject.FindGameObjectWithTag("ZonaDanio");
-        var zonaDeDanio = controlDanio.GetComponent<BoxCollider2D>();
+        var zonaDeDanio = ZonaDanio.GetComponent<BoxCollider2D>();
 
         zonaDeDanio.enabled = true;
         Animator.SetBool(AtaqueHash, true);
@@ -96,6 +104,7 @@ public class BolaBarroController : Enemigo
         }
         zonaDeDanio.enabled = false;
         Animator.SetBool(AtaqueHash, false);
+        enAtaque = false;
         Rb.velocity = new Vector2(0f, Rb.velocity.y);
 
         yield return new WaitForSeconds(CooldownAtaque);
@@ -104,12 +113,30 @@ public class BolaBarroController : Enemigo
 
     public override void RecibirDanio(int danio)
     {
-        throw new System.NotImplementedException();
+        if (enAtaque || estaMuerto) return;
+        Vida -= danio;
+        if (Vida <= 0)
+        {
+            Morir();
+            return;
+        }
+        Rb.velocity = Vector2.zero;
+        Animator.SetTrigger(RecibioDanioHash);
     }
 
     protected override void Morir()
     {
-        throw new System.NotImplementedException();
+        estaMuerto = true;
+        StopAllCoroutines();
+        ZonaDanio.GetComponent<BoxCollider2D>().enabled = false;
+        foreach (var col in GetComponents<Collider2D>())
+            col.enabled = false;
+        Rb.velocity = Vector2.zero;
+        Rb.simulated = false;
+        Animator.SetBool(CaminandoHash, false);
+        Animator.SetBool(AtaqueHash, false);
+        Animator.SetTrigger(MuerteHash);
+        Destroy(gameObject, SegundosHastaDesaparecer);
     }
 
     private void Orientar(float dirX)

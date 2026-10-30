@@ -15,7 +15,7 @@ public class ZonaDanioDeEnemigo : MonoBehaviour
         if (collision.tag.Equals("Player"))
         {
             var jugador = collision.GetComponent<PlayerController>();
-            jugador.recibirDanio(enemigo.Danio, new Vector2(transform.position.x, 0));
+            jugador.RecibirDanio(enemigo.Danio, new Vector2(transform.position.x, 0));
         }
     }
 

@@ -16,11 +16,14 @@ public abstract class Enemigo : MonoBehaviour
     [Header("Ataque")]
     public int Danio = 1;
     public float CooldownAtaque = 2f;
+    public int Vida = 3;
+    public GameObject ZonaDanio;
 
     protected Rigidbody2D Rb;
     protected Animator Animator;
     protected bool EstaCaminando = false;
     protected bool PuedeAtacar = true;
+    protected bool EstaRecibiendoDanio = false;
 
     protected virtual void Awake()
     {

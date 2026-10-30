@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3089497047002778540}
   m_Layer: 0
   m_Name: BolaBarro
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 625433119183302689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2107631, y: -1.147776, z: 0}
+  m_LocalPosition: {x: 0.8330877, y: -1.2314404, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -201,6 +201,9 @@ MonoBehaviour:
   Velocidad: 2
   Danio: 1
   CooldownAtaque: 1.5
+  Vida: 3
+  ZonaDanio: {fileID: 5236471969351704766}
+  SegundosHastaDesaparecer: 1.5
 --- !u!1 &5236471969351704766
 GameObject:
   m_ObjectHideFlags: 0
