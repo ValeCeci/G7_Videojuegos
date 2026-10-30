@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private MovimientoJugador movimiento;
 
     private static readonly int HashAnimRecibirDanio = Animator.StringToHash("recibioDanio");
+    private static readonly int HashAtacar = Animator.StringToHash("atacar");
+    private static readonly int HashMuerte = Animator.StringToHash("muerte");
 
     void Start()
     {
@@ -34,12 +36,26 @@ public class PlayerController : MonoBehaviour
         if (PuedeRecibirDanio)
         {
             Vida -= danio;
+            if(Vida <= 0)
+            {
+                Morir();
+                return;
+            }
             Vector2 rebote = new Vector2(transform.position.x - direccion.x, 1).normalized;
             rb.velocity = Vector2.zero;
             rb.AddForce(rebote * Rebote, ForceMode2D.Impulse);
             animator.SetTrigger(HashAnimRecibirDanio);
             StartCoroutine(invulnerabilidad());
         }
+    }
+
+    private void Morir()
+    {
+        rb.velocity = Vector2.zero;
+        BloquearMovimiento();
+        animator.SetTrigger(HashMuerte);
+        rb.bodyType = RigidbodyType2D.Static;
+        
     }
 
     public void BloquearMovimiento()
