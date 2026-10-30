@@ -25,6 +25,9 @@ public class MovimientoJugador : MonoBehaviour
     private bool corriendo;
     private float tiempoSinEntrada;
 
+    // Lo activa PlayerController durante el rebote para que el movimiento no pise la velocidad
+    public bool MovimientoBloqueado { get; set; }
+
     private static readonly int EstaCaminandoHash = Animator.StringToHash("caminando");
     private static readonly int EnSueloHash = Animator.StringToHash("enSuelo");
     private static readonly int VelocidadYHash = Animator.StringToHash("velocidadY");
@@ -58,7 +61,8 @@ public class MovimientoJugador : MonoBehaviour
         enSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioSuelo, capaSuelo);
         animator.SetFloat(VelocidadYHash, rb2D.velocity.y);
 
-        ControlarMovimientoHorizontal();
+        if (!MovimientoBloqueado)
+            ControlarMovimientoHorizontal();
         ControlarSalto();
     }
 
