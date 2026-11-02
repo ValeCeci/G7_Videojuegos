@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidadMovimiento: 2
   velocidadCorrer: 3.5
-  fuerzaSalto: 14
+  fuerzaSalto: 9
   margenCambioDireccion: 0.1
   puntoSuelo: {fileID: 5085112600896383104}
   radioSuelo: 0.2
