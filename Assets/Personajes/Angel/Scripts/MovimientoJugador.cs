@@ -24,6 +24,10 @@ public class MovimientoJugador : MonoBehaviour
     private bool enSuelo;
     private bool corriendo;
     private float tiempoSinEntrada;
+    private float tiempoUltimoSalto = -1f;
+
+    // Tras saltar se ignora el suelo este tiempo para que la subida inicial cuente como salto
+    private const float VentanaSalto = 0.15f;
 
     // Lo activa PlayerController durante el rebote para que el movimiento no pise la velocidad
     public bool MovimientoBloqueado { get; set; }
@@ -61,7 +65,10 @@ public class MovimientoJugador : MonoBehaviour
     private void FixedUpdate()
     {
         enSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioSuelo, capaSuelo);
-        animator.SetFloat(VelocidadYHash, rb2D.velocity.y);
+        // En suelo la velocidad vertical oscila cerca de 0 (esquinas de plataformas, saltos que apenas llegan al pico)
+        // y haria saltar el Animator entre jump y fall; solo se reporta si estamos en el aire o acabamos de saltar
+        bool saltandoRecien = Time.time - tiempoUltimoSalto < VentanaSalto;
+        animator.SetFloat(VelocidadYHash, enSuelo && !saltandoRecien ? 0f : rb2D.velocity.y);
 
         if (!MovimientoBloqueado)
             ControlarMovimientoHorizontal();
@@ -82,6 +89,7 @@ public class MovimientoJugador : MonoBehaviour
         if (quiereSaltar && enSuelo)
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, fuerzaSalto);
+            tiempoUltimoSalto = Time.time;
         }
         quiereSaltar = false;
     }

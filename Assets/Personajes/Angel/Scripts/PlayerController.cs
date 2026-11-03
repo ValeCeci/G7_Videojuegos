@@ -58,6 +58,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // El agua mata siempre, ignorando la vida y la invulnerabilidad
+    public void MorirPorAgua()
+    {
+        if (estaMuerto) return;
+        Vida = 0;
+        Morir();
+
+        // Se hunde despacio en lugar de caer a plomo
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0.2f;
+    }
+
     private void Morir()
     {
         estaMuerto = true;
