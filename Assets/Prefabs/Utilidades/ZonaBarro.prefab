@@ -91,5 +91,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   caminado: 1.5
-  correr: 1.5
-  salto: 10
+  correr: 2.5
+  salto: 9
