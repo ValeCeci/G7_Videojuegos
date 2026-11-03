@@ -41,6 +41,8 @@ public class MovimientoJugador : MonoBehaviour
 
     private void Update()
     {
+        if (MenuPausa.JuegoPausado) return;
+
         entradaHorizontal = Input.GetAxisRaw("Horizontal");
         corriendo = entradaHorizontal != 0 && Input.GetKey(KeyCode.LeftShift);
 

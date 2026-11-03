@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MenuPausa.JuegoPausado) return;
+
         var entradaAtaque = Input.GetMouseButtonDown(0);
         if (entradaAtaque && !estaMuerto) StartCoroutine(Atacar());
     }
