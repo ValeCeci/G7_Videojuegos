@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool PuedeRecibirDanio = true;
     private Rigidbody2D rb;
     private MovimientoJugador movimiento;
+    private HUD hud;
     private bool estaAtacando = false;
     private bool estaMuerto = false;
 
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         movimiento = GetComponent<MovimientoJugador>();
+        hud = FindObjectOfType<HUD>();
     }
 
     // Update is called once per frame
@@ -49,7 +51,8 @@ public class PlayerController : MonoBehaviour
         if (PuedeRecibirDanio && !estaMuerto)
         {
             Vida -= danio;
-            if(Vida <= 0)
+            hud.ActualizarVidas(Vida);
+            if (Vida <= 0)
             {
                 Morir();
                 return;
@@ -67,6 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (estaMuerto) return;
         Vida = 0;
+        hud.ActualizarVidas(Vida);
         Morir();
 
         // Se hunde despacio en lugar de caer
