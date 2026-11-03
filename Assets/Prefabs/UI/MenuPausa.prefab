@@ -665,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelPausa: {fileID: 392782081827914328}
   teclaPausa: 27
-  escenaInicio: MenuPrincipal
+  escenaInicio: Menu Principal
 --- !u!1 &8719153678954844803
 GameObject:
   m_ObjectHideFlags: 0

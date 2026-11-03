@@ -12,7 +12,7 @@ public class MenuPausa : MonoBehaviour
 
     [Header("Configuracion")]
     [SerializeField] private KeyCode teclaPausa = KeyCode.Escape;
-    [SerializeField] private string escenaInicio = "MenuPrincipal";
+    [SerializeField] private string escenaInicio = "Menu Principal";
 
     private void Start()
     {
@@ -55,11 +55,11 @@ public class MenuPausa : MonoBehaviour
     // Boton SALIR
     public void Salir()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                Application.Quit();
+        #endif
     }
 
     private void CambiarPausa(bool pausar)

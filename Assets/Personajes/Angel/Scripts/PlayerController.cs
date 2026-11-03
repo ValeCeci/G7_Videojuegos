@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class PlayerController : MonoBehaviour
     public float CooldownAtaque = 1.5f;
     public GameObject ZonaDanio;
     [SerializeField] private int Vida = 5;
+
+    [Header("Respawn")]
+    [SerializeField] private float SegundosParaReaparecer = 2.5f;
 
     private Animator animator;
     private bool PuedeRecibirDanio = true;
@@ -65,7 +69,7 @@ public class PlayerController : MonoBehaviour
         Vida = 0;
         Morir();
 
-        // Se hunde despacio en lugar de caer a plomo
+        // Se hunde despacio en lugar de caer
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0.2f;
     }
@@ -82,6 +86,14 @@ public class PlayerController : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
         animator.SetTrigger(HashMuerte);
+        StartCoroutine(Reaparecer());
+    }
+
+    // Se recarga el nivel para que el jugador, los enemigos y el agua vuelvan a su estado inicial
+    private IEnumerator Reaparecer()
+    {
+        yield return new WaitForSecondsRealtime(SegundosParaReaparecer);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private IEnumerator Atacar()
@@ -95,7 +107,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Los Animation Events no ejecutan corrutinas; deben llamar a un metodo void
+
     public void ActivarZonaDanio()
     {
 
