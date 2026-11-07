@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public int Danio = 1;
     public float SegundosInvulnerabilidad = 0.5f;
     public float Rebote = 10f;
+    [Tooltip("Tiempo maximo que se bloquea el movimiento tras recibir dano (respaldo si falla el evento de la animacion)")]
+    public float SegundosBloqueoDanio = 0.6f;
     public float CooldownAtaque = 1.5f;
     public GameObject ZonaDanio;
     [SerializeField] private int Vida = 5;
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private HUD hud;
     private bool estaAtacando = false;
     private bool estaMuerto = false;
+    private Coroutine bloqueoDanio;
 
     private static readonly int HashAnimRecibirDanio = Animator.StringToHash("recibioDanio");
     private static readonly int HashAtacar = Animator.StringToHash("atacar");
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.AddForce(rebote * Rebote, ForceMode2D.Impulse);
             animator.SetTrigger(HashAnimRecibirDanio);
+            if (bloqueoDanio != null) StopCoroutine(bloqueoDanio);
+            bloqueoDanio = StartCoroutine(BloqueoPorDanio());
             StartCoroutine(invulnerabilidad());
         }
     }
@@ -135,6 +138,16 @@ public class PlayerController : MonoBehaviour
     {
         if (estaMuerto) return;
         movimiento.MovimientoBloqueado = false;
+    }
+
+    // No depende del evento DesbloquearMovimiento de la animacion: si la animacion se interrumpe,
+    // el jugador quedaria bloqueado y se deslizaria sin control (sin drag ni friccion)
+    private IEnumerator BloqueoPorDanio()
+    {
+        movimiento.MovimientoBloqueado = true;
+        yield return new WaitForSecondsRealtime(SegundosBloqueoDanio);
+        bloqueoDanio = null;
+        DesbloquearMovimiento();
     }
 
     private IEnumerator invulnerabilidad()

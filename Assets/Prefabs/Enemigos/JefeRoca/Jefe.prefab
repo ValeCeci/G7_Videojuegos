@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 443934868369625352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.25, y: -1.98, z: 0}
+  m_LocalPosition: {x: -11.35, y: -1.67, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -119,7 +119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e180b96776d3504781dbb39b79249c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RadioDeteccion: 15
+  RadioDeteccion: 10
+  Vida: 3
   Danio: 3
   CooldownAtaque: 6
   Golpe: {fileID: 1855982103178679614, guid: fc33264a4193add459376bf922a0b39f, type: 3}
+  TiempoRecuperacion: 2
+  RadioSpawnObjetoVital: 8
+  ObjetoVital: {fileID: 1427591598122454976, guid: cd23025cb17570c43a04d9d330634471, type: 3}
+  ObjetoVitalConVida: 0
