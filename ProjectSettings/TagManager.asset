@@ -7,6 +7,7 @@ TagManager:
   - ZonaDanio
   - Enemigo
   - ObjetoVital
+  - Suelo
   layers:
   - Default
   - TransparentFX

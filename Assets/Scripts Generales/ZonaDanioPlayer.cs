@@ -16,8 +16,9 @@ public class ZonaDanioPlayer : MonoBehaviour
         if (collision.tag.Equals("Enemigo"))
         {
             var enemigo = collision.GetComponent<Enemigo>();
-            enemigo.RecibirDanio(PlayerController.Danio);
-        }else if (collision.tag.Equals("ObjetoVital"))
+            StartCoroutine(enemigo.RecibirDanio(PlayerController.Danio));
+        }
+        else if (collision.tag.Equals("ObjetoVital"))
         {
             var objeto = collision.GetComponent<ObjetoVital>();
             StartCoroutine(objeto.RecibirDanio(PlayerController.Danio));

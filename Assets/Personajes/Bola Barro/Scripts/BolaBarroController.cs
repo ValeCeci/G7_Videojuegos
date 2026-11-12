@@ -26,25 +26,6 @@ public class BolaBarroController : Enemigo
         if (!PuedeAtacar || estaMuerto) return;
         ControlarMovimiento();
     }
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, RadioDeteccion);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, RadioDeteccionAtaque);
-    }
-
-    private void Girar()
-    {
-        Vector3 escala = transform.localScale;
-        escala.x *= -1f;
-        transform.localScale = escala;
-    }
-
-    private bool MiradoDerecha()
-    {
-        return transform.localScale.x > 0f;
-    }
 
     protected override void ControlarMovimiento()
     {
@@ -111,17 +92,18 @@ public class BolaBarroController : Enemigo
         PuedeAtacar = true;
     }
 
-    public override void RecibirDanio(int danio)
+    public override IEnumerator RecibirDanio(int danio)
     {
-        if (enAtaque || estaMuerto) return;
+        if (enAtaque || estaMuerto) yield return new WaitForSeconds(SegundosInvulnerabilidad); 
         Vida -= danio;
         if (Vida <= 0)
         {
             Morir();
-            return;
+            yield return new WaitForSeconds(SegundosInvulnerabilidad);
         }
         Rb.velocity = Vector2.zero;
         Animator.SetTrigger(RecibioDanioHash);
+        yield return new WaitForSeconds(SegundosInvulnerabilidad);
     }
 
     protected override void Morir()
@@ -137,11 +119,5 @@ public class BolaBarroController : Enemigo
         Animator.SetBool(AtaqueHash, false);
         Animator.SetTrigger(MuerteHash);
         Destroy(gameObject, SegundosHastaDesaparecer);
-    }
-
-    private void Orientar(float dirX)
-    {
-        if ((dirX > 0 && !MiradoDerecha()) || (dirX < 0 && MiradoDerecha()))
-            Girar();
     }
 }
