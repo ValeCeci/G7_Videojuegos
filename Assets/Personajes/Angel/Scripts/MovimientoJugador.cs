@@ -25,6 +25,7 @@ public class MovimientoJugador : MonoBehaviour
     private bool corriendo;
     private float tiempoSinEntrada;
     private float tiempoUltimoSalto = -1f;
+    private PlataformaMovil _plataforma;
 
     // Tras saltar se ignora el suelo este tiempo para que la subida inicial cuente como salto
     private const float VentanaSalto = 0.15f;
@@ -71,7 +72,11 @@ public class MovimientoJugador : MonoBehaviour
         animator.SetFloat(VelocidadYHash, enSuelo && !saltandoRecien ? 0f : rb2D.velocity.y);
 
         if (!MovimientoBloqueado)
+        {
             ControlarMovimientoHorizontal();
+            if (_plataforma != null)
+                rb2D.position += _plataforma.Delta;
+        }
         ControlarSalto();
     }
 
@@ -104,6 +109,16 @@ public class MovimientoJugador : MonoBehaviour
     private bool MirandoALaDerecha()
     {
         return transform.localScale.x > 0;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.TryGetComponent(out PlataformaMovil p)) _plataforma = p;
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.TryGetComponent(out PlataformaMovil _)) _plataforma = null;
     }
 
     private void OnDrawGizmosSelected()
